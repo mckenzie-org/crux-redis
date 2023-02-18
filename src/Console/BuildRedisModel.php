@@ -1,6 +1,6 @@
 <?php
 
-namespace Etlok\Crux\Console;
+namespace Etlok\Crux\Redis\Console;
 
 use Illuminate\Foundation\Console\ModelMakeCommand;
 use Symfony\Component\Console\Input\InputOption;

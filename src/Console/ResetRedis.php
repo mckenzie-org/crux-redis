@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Crux\Modules\Redis\Commands;
+namespace Etlok\Crux\Redis\Console;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Redis;

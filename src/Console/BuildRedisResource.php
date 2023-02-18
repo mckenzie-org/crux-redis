@@ -1,5 +1,5 @@
 <?php
-namespace Etlok\Crux\Console;
+namespace Etlok\Crux\Redis\Console;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;

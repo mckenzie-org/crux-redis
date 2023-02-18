@@ -1,11 +1,13 @@
 <?php
 namespace Etlok\Crux\Redis;
 
-use Etlok\Crux\Console\BuildRedisController;
-use Etlok\Crux\Console\BuildRedisDefinition;
-use Etlok\Crux\Console\BuildRedisModel;
-use Etlok\Crux\Console\BuildRedisResource;
-use Etlok\Crux\Console\InstallCruxRedis;
+use Etlok\Crux\Redis\Console\BuildRedisController;
+use Etlok\Crux\Redis\Console\BuildRedisDefinition;
+use Etlok\Crux\Redis\Console\BuildRedisModel;
+use Etlok\Crux\Redis\Console\BuildRedisResource;
+use Etlok\Crux\Redis\Console\InstallCruxRedis;
+use Etlok\Crux\Redis\Console\ResetRedis;
+use Etlok\Crux\Redis\Console\SyncRedis;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
@@ -25,7 +27,9 @@ class CruxRedisServiceProvider extends ServiceProvider
                 BuildRedisController::class,
                 BuildRedisModel::class,
                 BuildRedisDefinition::class,
-                BuildRedisResource::class
+                BuildRedisResource::class,
+                ResetRedis::class,
+                SyncRedis::class
             ]);
 
             $this->publishes([
