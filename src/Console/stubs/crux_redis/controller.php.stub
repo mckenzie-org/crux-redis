@@ -1,0 +1,50 @@
+<?php
+
+namespace DummyNamespace;
+
+use Etlok\Crux\Http\Controllers\CruxModelController;
+use {{ namespacedModel }};
+use {{ rootNamespace }}Crux\Controllers\ModelController;
+use {{ namespacedRequests }}
+
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+
+class DummyClass extends CruxRedisController
+{
+    public function __construct(){
+        $this->setModel(Str::snake('{{model}}'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \{{ namespacedStoreRequest }}  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store({{ storeRequest }} $request)
+    {
+        $validated = $request->validated();
+        return $this->save($validated);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \{{ namespacedUpdateRequest }}  $request
+     * @param  \{{ namespacedModel }}  ${{ modelVariable }}
+     * @return \Illuminate\Http\Response
+     */
+    public function update({{ updateRequest }} $request, {{ model }} ${{ modelVariable }})
+    {
+        $validated = $request->validated();
+        return $this->save($validated);
+    }
+
+    public function pivotUpdate($id, $child, $child_id, Request $request)
+    {
+        $validated = $request->input();
+        return $this->updatePivot($id, $child, $child_id, $validated);
+    }
+
+}

@@ -1,0 +1,51 @@
+<?php
+
+namespace {{ namespace }};
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
+
+class {{ class }} extends FormRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
+    public function authorize()
+    {
+        return true;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function rules()
+    {
+        return [
+            //
+        ];
+    }
+
+    protected function failedValidation(Validator $validator) {
+        $errors = "";
+        $error_messages = $validator->errors()->all();
+        if($error_messages) {
+            foreach ($error_messages as $field=>$message) {
+                $errors .= "<pre class='bg-gray-100 mt-2 px-4 py-1 rounded-sm text-sm text-pink-600'>{$message}</pre>";
+            }
+        }
+        throw new HttpResponseException(response()->json([
+                                                             'status'=>1,
+                                                             'errorMessage'=>[
+                                                                 'title'=>'Validation Failed',
+                                                                 'text'=>'The following fields did not pass validation:'.$errors
+                                                             ],
+                                                             'errors'=>$validator->errors()
+                                                         ], 422));
+    }
+
+
+}

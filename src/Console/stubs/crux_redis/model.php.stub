@@ -1,0 +1,20 @@
+<?php
+
+namespace {{ namespace }};
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Etlok\Crux\Traits\HasDefinition;
+use Etlok\Crux\Traits\HasUuids;
+use Etlok\Crux\Redis\Traits\UsesRedis;
+use Illuminate\Support\Str;
+
+class {{ class }} extends Model
+{
+    use HasFactory, HasDefinition, HasUuids, UsesRedis;
+    protected $table = '';
+    protected $fillable = [];
+    protected $_element = '';
+    protected $_fields = [];
+    public $_relationships = [];
+}
