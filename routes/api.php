@@ -6,6 +6,7 @@ $resources = config('crux_redis.routes.api');
 if($resources) {
     foreach ($resources as $resource=>$data) {
         $controller = $data['controller'];
+        Route::get('/'.$resource.'/something/test/something/load/test', [$controller,'test']);
         Route::post('/'.$resource.'/{id}/load', [$controller,'load']);
         Route::post('/'.$resource.'/{id}/unload', [$controller,'load']);
         Route::post('/'.$resource.'/load/all', [$controller,'loadAll']);

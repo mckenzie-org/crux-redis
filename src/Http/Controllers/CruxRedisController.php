@@ -12,6 +12,13 @@ class CruxRedisController extends CruxModelController {
     public $modelPlural = '';
     public $modelType = '';
 
+    public function test()
+    {
+        return response()->json([
+            'status'=>0
+        ]);
+    }
+
     /**
      * Store a newly created resource in storage.
      *
