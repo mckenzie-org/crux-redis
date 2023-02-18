@@ -39,12 +39,11 @@ class CruxRedisServiceProvider extends ServiceProvider
             $this->publishes([
                 __DIR__.'/./Console/stubs' => base_path('stubs'),
             ], 'stubs');
-
-            Route::prefix(config('crux.api.prefix'))->middleware(config('crux.api.middleware'))->group(function() {
-                $this->loadRoutesFrom(__DIR__.'/../routes/api.php');
-            });
-
         }
+
+        Route::prefix(config('crux.api.prefix'))->middleware(config('crux.api.middleware'))->group(function() {
+            $this->loadRoutesFrom(__DIR__.'/../routes/api.php');
+        });
 
     }
 }
