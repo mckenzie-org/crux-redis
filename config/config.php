@@ -6,5 +6,6 @@ return [
     ],
     'models'=>[
 
-    ]
+    ],
+    'allowed_test_commands'=>null
 ];
