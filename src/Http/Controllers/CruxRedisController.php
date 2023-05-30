@@ -272,8 +272,9 @@ class CruxRedisController extends CruxModelController {
                 ]
             ],404);
         }
-        new($this->model)->makeIndexes();
-        new($this->model)->makeMaps();
+        $obj = (new $this->model);
+        $obj->makeIndexes();
+        $obj->makeMaps();
         return response()->json(['status'=>0]);
     }
 
@@ -289,8 +290,9 @@ class CruxRedisController extends CruxModelController {
                 ]
             ],404);
         }
-        new($this->model)->clearIndexes();
-        new($this->model)->clearMaps();
+        $obj = (new $this->model);
+        $obj->clearIndexes();
+        $obj->clearMaps();
         return response()->json(['status'=>0]);
     }
 
