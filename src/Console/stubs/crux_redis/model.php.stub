@@ -16,5 +16,6 @@ class {{ class }} extends Model
     protected $fillable = [];
     protected $_element = '';
     protected $_fields = [];
+    public $_with = [];
     public $_relationships = [];
 }

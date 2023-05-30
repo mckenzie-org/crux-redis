@@ -2,9 +2,8 @@
 
 namespace DummyNamespace;
 
-use Etlok\Crux\Http\Controllers\CruxModelController;
+use Etlok\Crux\Http\Controllers\CruxRedisController;
 use {{ namespacedModel }};
-use {{ rootNamespace }}Crux\Controllers\ModelController;
 use {{ namespacedRequests }}
 
 use Illuminate\Support\Str;

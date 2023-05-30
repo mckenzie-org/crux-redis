@@ -878,7 +878,7 @@ trait UsesRedis {
             }
         }
 
-        $instance_keys = array_keys($id,$col_array);
+        $instance_keys = array_keys($col_array,$id);
         if($instance_keys) {
             return array_filter($arr,function($k) use ($instance_keys) {
                 return in_array($k, $instance_keys);

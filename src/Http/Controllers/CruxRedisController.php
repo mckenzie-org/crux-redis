@@ -87,6 +87,30 @@ class CruxRedisController extends CruxModelController {
 
     }
 
+    public function getRedisData(Request $request, $id)
+    {
+        $traits = class_uses($this->model);
+        if(!isset($traits['Etlok\Crux\Redis\Traits\UsesRedis'])) {
+            return response()->json([
+                'status'=>1,
+                'errorMessage'=>[
+                    'title'=>'Does Not Use Redis!',
+                    'text'=>'{$this->modelType} does not use Redis.'
+                ]
+            ],404);
+        }
+        $obj = new ($this->model);
+
+        if($request->has('with')) {
+            $with = $request->input('with');
+            $obj = $obj->setWith($with);
+        }
+
+        $obj->findFromRedis($id);
+
+        return response()->json(['status'=>0,'object'=>$obj->redis_data]);
+    }
+
     public function load($id)
     {
         $traits = class_uses($this->model);
@@ -248,7 +272,8 @@ class CruxRedisController extends CruxModelController {
                 ]
             ],404);
         }
-        $this->model::makeIndexes();
+        new($this->model)->makeIndexes();
+        new($this->model)->makeMaps();
         return response()->json(['status'=>0]);
     }
 
@@ -264,7 +289,8 @@ class CruxRedisController extends CruxModelController {
                 ]
             ],404);
         }
-        $this->model::clearIndexes();
+        new($this->model)->clearIndexes();
+        new($this->model)->clearMaps();
         return response()->json(['status'=>0]);
     }
 
