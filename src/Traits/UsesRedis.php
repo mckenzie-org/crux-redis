@@ -147,6 +147,24 @@ trait UsesRedis {
                     $value = $this->$field;
                     $redis->hset($repo,$field,$value);
                 }
+            }
+            $item = $redis->hgetall($repo);
+            if($item) {
+                foreach ($item as $k=>$v) {
+                    if(isset($this->_fields[$k]) && $this->_fields[$k] === 'int') {
+                        $item[$k] = intval($v);
+                    } else if(isset($this->_fields[$k]) && $this->_fields[$k] === 'float') {
+                        $item[$k] = floatval($v);
+                    } else if (isset($this->_fields[$k]) && $this->_fields[$k] === 'json') {
+                        $item[$k] = @json_decode($v, true);
+                    }
+                }
+            } else {
+                $item = null;
+            }
+
+            $this->redis_data = $item;
+            foreach ($this->_fields as $field=>$type) {
                 if(property_exists($this,'_indexes')) {
                     if (isset($this->_indexes[$field])) {
                         $this->addToIndex($field, $value);
@@ -197,6 +215,7 @@ trait UsesRedis {
                                 $redis->sadd($child_objects_repo, $member);
                             }
                             if(isset($child_props['should_load']) && $child_props['should_load']) {
+
                                 $child_obj->loadIntoRedis();
                             }
 
@@ -259,6 +278,7 @@ trait UsesRedis {
 
     public function addToMap($map_id,$map_content)
     {
+
         $redis = $this->redis();
         $repo = $this->_element . ":map:" . $map_id;
         if($map_content) {
