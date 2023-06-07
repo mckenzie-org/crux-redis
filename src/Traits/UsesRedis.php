@@ -220,7 +220,7 @@ trait UsesRedis {
                             }
 
                             if(isset($child_props['pivot'])) {
-                                $pivot_repo = $element.":".$this->id.":".$child_props['element'].":".$child_obj->id;
+                                $pivot_repo = $element.":".$this->id.":".$child.":".$child_obj->id;
                                 foreach ($child_props['pivot'] as $pik=> $piv) {
                                     $redis->hset($pivot_repo,$pik,$child_obj->pivot->$pik);
                                 }
