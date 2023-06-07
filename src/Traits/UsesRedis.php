@@ -948,7 +948,7 @@ trait UsesRedis {
         }
         $child_class = $child_props['class'];
         $child_obj = (new $child_class)->findFromRedis($child_repo);
-
+        $child_data = $child_obj->redis_data;
         if($child_props !== null && isset($child_props['pivot'])) {
             $pivot_repo = $this->_element.":".$this->value('id').":".$child.":".$child_obj->value('id');
             $pivot_element_exists = $redis->exists($pivot_repo);
@@ -967,7 +967,7 @@ trait UsesRedis {
                 }
             }
         }
-        $child_data = $child_obj->redis_data;
+
         if($objects !== null) {
             $objects[] = $child_obj;
         }
