@@ -802,7 +802,8 @@ trait UsesRedis {
     public function findFromRedis($id)
     {
         if($id === null) {
-            return null;
+            $this->redis_data = null;
+            return $this;
         }
         $redis = $this->redis();
         $element = $this->_element;
