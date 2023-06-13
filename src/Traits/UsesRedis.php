@@ -801,6 +801,9 @@ trait UsesRedis {
 
     public function findFromRedis($id)
     {
+        if($id === null) {
+            return null;
+        }
         $redis = $this->redis();
         $element = $this->_element;
         $repo = $element.":".$id;
@@ -889,7 +892,9 @@ trait UsesRedis {
     public function searchAll($field, $id, $search_field = 'id')
     {
         $arr = $this->value($field);
-
+        if($arr === null) {
+            return null;
+        }
         $parts = explode(".",$search_field);
         $col_array = $arr;
         if($parts) {

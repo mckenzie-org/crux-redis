@@ -2,7 +2,7 @@
 
 namespace DummyNamespace;
 
-use Etlok\Crux\Http\Controllers\CruxRedisController;
+use Etlok\Crux\Redis\Http\Controllers\CruxRedisController;
 use {{ namespacedModel }};
 use {{ namespacedRequests }}
 
