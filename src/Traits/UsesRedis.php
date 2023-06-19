@@ -478,7 +478,7 @@ trait UsesRedis {
         }
         if(property_exists($this,'_maps')) {
             foreach($this->_maps as $map_id=>$map_content) {
-                $this->removeFromIndex($map_id, $map_content);
+                $this->removeFromMap($map_id, $map_content);
             }
         }
 
