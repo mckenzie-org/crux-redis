@@ -649,7 +649,7 @@ trait UsesRedis {
         $member = $child_obj->_element.":".$child_obj->value('id');
         $child_repo = $this->_element.":".$this->value('id').":".$relation.":".$child_obj->value('id');
 
-        if(!$redis->sismember($element_repo, $member)) {
+        if($redis->sismember($element_repo, $member)) {
             $redis->srem($element_repo, $member);
         }
 
