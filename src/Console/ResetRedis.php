@@ -43,7 +43,9 @@ class ResetRedis extends Command
         if($models) {
             foreach ($models as $model_type) {
                 $model = $model_type['model'];
+                $this->line("Loading ".$model);
                 (new $model)->loadAll();
+                $this->line('--- Complete ---');
             }
         }
         return 0;
