@@ -685,13 +685,13 @@ trait UsesRedis {
     {
         $redis = $this->redis();
         $element = $this->_element;
-        $repo = $element.":".$this->id;
+        $repo = $element.":".$this->value('id');
 
         $exists = $redis->exists($repo);
         if(intval($exists) !== 1) {
             return;
         }
-        $this->findFromRedis($this->id);
+        $this->findFromRedis($this->value('id'));
 
         $children = $this->_with;
         if($children) {
@@ -715,7 +715,7 @@ trait UsesRedis {
                         }
                     }
                 } else {
-                    $child_objects_repo = $element.":".$this->id.":".$child;
+                    $child_objects_repo = $element.":".$this->value('id').":".$child;
                     $child_repos = $redis->smembers($child_objects_repo);
                     if($child_repos) {
                         foreach ($child_repos as $child_repo) {
@@ -727,7 +727,7 @@ trait UsesRedis {
                                 }
 
                                 if(isset($child_props['pivot'])) {
-                                    $pivot_repo = $element.":".$this->id.":".$child.":".$child_obj->value('id');
+                                    $pivot_repo = $element.":".$this->value('id').":".$child.":".$child_obj->value('id');
                                     $exists = $redis->exists($pivot_repo);
                                     if(intval($exists) === 1) {
                                         $redis->del($pivot_repo);
