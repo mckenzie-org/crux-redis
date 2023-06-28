@@ -3,6 +3,7 @@
 namespace Etlok\Crux\Redis\Jobs;
 
 use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Facades\Log;
 
 class SyncRedis
 {
@@ -27,6 +28,11 @@ class SyncRedis
         $element_parts = explode(':',$repo_parts[0]);
         $function_name = 'execute'.$element_parts[1];
         $class_name = $element_parts[0];
-        (new $class_name)->$function_name($repo_parts[1]);
+        try {
+            (new $class_name)->$function_name($repo_parts[1]);
+        } catch(\Exception $e) {
+            Log::error($e->getMessage());
+        }
+
     }
 }

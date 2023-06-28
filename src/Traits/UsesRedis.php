@@ -352,7 +352,7 @@ trait UsesRedis {
 
     public function updateSettings($s)
     {
-        $this->settings = array_merge_recursive($this->settings, $s);
+        $this->settings = array_merge($this->settings, $s);
         return $this;
     }
 
