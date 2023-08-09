@@ -207,6 +207,29 @@ trait UsesRedis {
                     }
                 } else {
                     $child_objects_repo = $element.":".$this->id.":".$child;
+
+                    /**
+                     * Clear out any data related to children, so any children are removed before being re-added.
+                     */
+                    if(isset($child_props['pivot'])) {
+                        $elements = $redis->smembers($child_objects_repo);
+                        if ($elements) {
+                            foreach ($elements as $element) {
+                                $split = explode(':', $elements);
+                                if ($split[0] === $child_props['element'] && isset($split[1])) {
+                                    $pivot_repo = $element.":".$this->id.":".$child_props['element'].":".$split[1];
+                                    $exists = $redis->exists($pivot_repo);
+                                    if(intval($exists) === 1) {
+                                        $redis->del($pivot_repo);
+                                    }
+                                }
+                            }
+                        }
+                        $redis->del($child_objects_repo);
+                    } else {
+                        $redis->del($child_objects_repo);
+                    }
+
                     $child_objects = $this->$child()->get();
                     if(!$child_objects->isEmpty()) {
                         foreach ($child_objects as $child_obj) {
