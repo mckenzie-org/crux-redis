@@ -212,10 +212,10 @@ trait UsesRedis {
                      * Clear out any data related to children, so any children are removed before being re-added.
                      */
                     if(isset($child_props['pivot'])) {
-                        $elements = $redis->smembers($child_objects_repo);
-                        if ($elements) {
-                            foreach ($elements as $element) {
-                                $split = explode(':', $elements);
+                        $child_elements = $redis->smembers($child_objects_repo);
+                        if ($child_elements) {
+                            foreach ($child_elements as $child_element) {
+                                $split = explode(':', $child_element);
                                 if ($split[0] === $child_props['element'] && isset($split[1])) {
                                     $pivot_repo = $element.":".$this->id.":".$child_props['element'].":".$split[1];
                                     $exists = $redis->exists($pivot_repo);
