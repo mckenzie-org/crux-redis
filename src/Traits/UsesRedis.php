@@ -74,6 +74,10 @@ trait UsesRedis {
 
     public static function loadAll()
     {
+        $obj = (new self);
+        $obj->clearIndexes();
+        $obj->clearMaps();
+
         $objects = self::get();
         if(!$objects->isEmpty()) {
             foreach ($objects as $obj) {
@@ -81,9 +85,6 @@ trait UsesRedis {
             }
         }
 
-        $obj = (new self);
-        $obj->makeIndexes();
-        $obj->makeMaps();
         if(method_exists($obj,'onLoadInstances')) {
             $obj->onLoadInstances();
         }
@@ -165,6 +166,17 @@ trait UsesRedis {
 
             $this->redis_data = $item;
             foreach ($this->_fields as $field=>$type) {
+                $value = null;
+                if($type === 'json') {
+                    if(gettype($this->$field ) === 'array') {
+                        $value = @json_encode($this->$field);
+                    } else if(gettype($this->$field) === 'string') {
+                        $value = @json_encode(@json_decode($this->$field));
+                    }
+                } else {
+                    $value = $this->$field;
+                }
+
                 if(property_exists($this,'_indexes')) {
                     if (isset($this->_indexes[$field])) {
                         $this->addToIndex($field, $value);
@@ -695,6 +707,12 @@ trait UsesRedis {
         $redis = $this->redis();
         $index_repo = $this->_element.":index:".$field.":".$value;
         $redis->sadd($index_repo,$this->_element.":".$this->value('id'));
+
+        $all_indexes_repo = $this->_element.":indexes";
+        if(!$redis->sismember($all_indexes_repo, $index_repo)) {
+            $redis->sadd($all_indexes_repo, $index_repo);
+        }
+
     }
 
     public function removeFromIndex($field, $value)
