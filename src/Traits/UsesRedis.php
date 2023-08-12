@@ -141,6 +141,8 @@ trait UsesRedis {
                         $value = @json_encode($this->$field);
                     } else if(gettype($this->$field) === 'string') {
                         $value = @json_encode(@json_decode($this->$field));
+                    } else {
+                        $value = null;
                     }
 
                     $redis->hset($repo,$field,$value);
@@ -172,6 +174,8 @@ trait UsesRedis {
                         $value = @json_encode($this->$field);
                     } else if(gettype($this->$field) === 'string') {
                         $value = @json_encode(@json_decode($this->$field));
+                    } else {
+                        $value = null;
                     }
                 } else {
                     $value = $this->$field;
