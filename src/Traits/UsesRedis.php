@@ -429,7 +429,7 @@ trait UsesRedis {
             }
         }
 
-        $repo = $this->_element.":".$this->id;
+        $repo = $this->_element.":".$this->value('id');
         $redis->hset($repo,$field, $value);
         if(property_exists($this,'_indexes')) {
             if (isset($this->_indexes[$field])) {
