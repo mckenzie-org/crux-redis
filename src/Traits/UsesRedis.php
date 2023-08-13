@@ -609,6 +609,24 @@ trait UsesRedis {
         }
         $create_repo = self::class.":Creates";
         $this->queue($create_repo, $repo);
+
+        if(property_exists($this,'_parents')) {
+            $parents = $this->_parents;
+            if($parents) {
+                foreach ($parents as $p=>$parent_props) {
+                    if(isset($data[$parent_props['id']])) {
+                        $parent_cls = $parent_props['class'];
+                        $parent_obj = (new $parent_cls);
+                        $member = $this->_element.":".$this->value('id');
+                        $child_objects_repo = $parent_obj->_element.":".$data[$parent_props['id']].":".Str::plural($this->_element);
+                        if(!$redis->sismember($child_objects_repo, $member)) {
+                            $redis->sadd($child_objects_repo, $member);
+                        }
+                    }
+                }
+            }
+        }
+
         return $this;
     }
 
