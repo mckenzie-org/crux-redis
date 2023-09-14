@@ -1215,6 +1215,15 @@ trait UsesRedis {
         $pivot_element_exists = $redis->exists($repo);
         if(intval($pivot_element_exists) === 1) {
             $pivot_data = $redis->hgetall($repo);
+
+            if(isset($obj->_relationships[$child])) {
+                foreach($obj->_relationships[$child]['pivot'] as $pivot_field=>$pivot_type) {
+                    if($pivot_type === 'json' && isset($pivot_data[$pivot_field]) && $pivot_data[$pivot_field] === '') {
+                        $pivot_data[$pivot_field] = null;
+                    }
+                }
+            }
+
             $obj->$child()->syncWithoutDetaching([$child_id => $pivot_data]);
         } else {
             $obj->$child()->syncWithoutDetaching([$child_id]);
