@@ -482,7 +482,7 @@ trait UsesRedis {
     {
         $redis = $this->redis();
         $this->updateFields($data);
-        $repo = $this->_element.":".$this->id;
+        $repo = $this->_element.":".$this->value('id');
         $update_repo = self::class.":Updates";
         $this->queue($update_repo, $repo);
     }
