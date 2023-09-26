@@ -1168,6 +1168,15 @@ trait UsesRedis {
         if(isset($data['id'])) {
             unset($data['id']);
         }
+
+        if(property_exists($this,'casts') && $this->casts) {
+            foreach ($this->casts as $ckey=>$ctype) {
+                if($ctype === 'array' && isset($data[$ckey])) {
+                    $data[$ckey] = @json_decode($data[$ckey]);
+                }
+            }
+        }
+
         $obj->fill($data);
         $obj->save();
 
