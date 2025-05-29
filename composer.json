@@ -1,5 +1,5 @@
 {
-  "name": "etlok/crux-redis",
+  "name": "mckenzie-org/crux-redis",
   "description": "Crux Redis Module.",
   "type": "library",
   "license": "MIT",
