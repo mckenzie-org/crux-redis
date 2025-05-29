@@ -26,9 +26,21 @@
       ]
     }
   },
-  "repositories": [ { "type": "composer", "url": "https://packages.etlokstudios.com/" } ],
-  "require": {
-    "etlok/crux": "1.*",
+"repositories": [
+    {
+        "type": "vcs",
+        "url": "https://github.com/mckenzie-org/crux"
+    },
+    {
+        "type": "vcs",
+        "url": "https://github.com/mckenzie-org/crux-redis"
+    },
+    {
+        "type": "vcs",
+        "url": "https://github.com/mckenzie-org/crux-websockets"
+    }
+],   "require": {
+    "mckenzie-org/crux": "1.*",
     "ext-curl": "*",
     "ext-json": "*"
   },
